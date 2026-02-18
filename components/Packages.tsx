@@ -36,8 +36,8 @@ const Packages: React.FC = () => {
                     </p>
                     <div className="flex flex-col">
                       <span className="text-slate-400 text-sm font-medium mb-1">Entrada: R$ {pkg.entryPrice}</span>
-                      <div className="mt-1 flex items-baseline gap-2">
-                        <span className="text-5xl font-black text-white tracking-tighter">R$ {pkg.monthlyPrice}</span>
+                      <div className="mt-2 flex items-baseline gap-2">
+                        <span className="text-6xl font-black text-white tracking-tighter">R$ {pkg.monthlyPrice}</span>
                         <span className="text-sm font-bold text-slate-500 uppercase tracking-widest">/mês</span>
                       </div>
                     </div>
@@ -65,6 +65,7 @@ const Packages: React.FC = () => {
               <a 
                 href={`${SOCIAL_LINKS.whatsapp}?text=${encodeURIComponent(pkg.waMessage)}`} 
                 target="_blank"
+                rel="noreferrer"
                 className="w-full mt-auto"
               >
                 <Button 

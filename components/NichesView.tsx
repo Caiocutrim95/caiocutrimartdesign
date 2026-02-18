@@ -11,7 +11,7 @@ const NichesView: React.FC = () => {
       <div className="max-w-[1400px] mx-auto">
         <SectionTitle 
           title="Mercados Estratégicos" 
-          subtitle="Especialização absoluta para nichos que exigem autoridade e performance."
+          subtitle="Especialização absoluta para nichos que exigem autoridade e performance digital."
         />
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
@@ -43,18 +43,19 @@ const NichesView: React.FC = () => {
                     </div>
                     <div className="text-right space-y-1">
                        <span className="block text-[9px] text-slate-600 uppercase font-black tracking-widest">Plano Mensal</span>
-                       <span className="text-3xl font-black text-orange-500 leading-none">R$ 199</span>
+                       <span className="text-4xl font-black text-orange-500 leading-none">R$ 199</span>
                     </div>
                  </div>
               </div>
 
               <a 
-                href={`${SOCIAL_LINKS.whatsapp}?text=${encodeURIComponent(`Olá Caio, sou ${niche.name} e quero finalizar meu projeto com as condições exclusivas.`)}`} 
+                href={`${SOCIAL_LINKS.whatsapp}?text=${encodeURIComponent(`Olá Caio, sou ${niche.name} e quero finalizar meu projeto com as condições exclusivas de R$ 199/mês.`)}`} 
                 target="_blank"
+                rel="noreferrer"
                 className="block w-full"
               >
-                <Button variant="outline" className="w-full text-[10px] tracking-[0.2em] py-4">
-                  PROSSEGUIR <ArrowRight size={14} />
+                <Button variant="outline" className="w-full h-14 text-[10px] tracking-[0.2em]">
+                  FINALIZAR PELO WHATSAPP <ArrowRight size={14} />
                 </Button>
               </a>
             </div>
