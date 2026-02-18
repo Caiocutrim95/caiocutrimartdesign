@@ -1,20 +1,43 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
 
-# Run and deploy your AI Studio app
+# Caio Cutrim - Portfólio Premium (GitHub Pages Ready)
 
-This contains everything you need to run your app locally.
+Este projeto foi configurado para rodar perfeitamente no GitHub Pages utilizando `HashRouter` para evitar erros de rotas não encontradas (página branca) e scripts automáticos de build e deploy.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1rvsO8RiRcqFdeaNe5zeu5qRqQKqHi1KH
+## 🚀 Como rodar localmente
 
-## Run Locally
+1.  **Clone o repositório:**
+    ```bash
+    git clone https://github.com/SEU_USUARIO/portfolio.git
+    cd portfolio
+    ```
 
-**Prerequisites:**  Node.js
+2.  **Instale as dependências:**
+    ```bash
+    npm install
+    ```
 
+3.  **Inicie o servidor de desenvolvimento:**
+    ```bash
+    npm start
+    ```
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## 📦 Como fazer o Deploy (GitHub Pages)
+
+1.  **Ajuste o package.json:**
+    Substitua a propriedade `"homepage"` no arquivo `package.json` pela URL do seu repositório:
+    `"homepage": "https://caioiakal.github.io/portfolio"`
+
+2.  **Execute o comando de deploy:**
+    ```bash
+    npm run deploy
+    ```
+    *Este comando irá automaticamente gerar o build e subir para a branch `gh-pages`.*
+
+## 📂 Estrutura de Imagens
+As imagens estão configuradas para carregar de `/assets/`. Certifique-se de salvar suas imagens em `public/assets/` para que funcionem sem internet ou dependência de links externos.
+
+## ✨ Tecnologias
+- **React 19**
+- **HashRouter** (Melhor compatibilidade com GitHub Pages)
+- **Tailwind CSS**
+- **Glassmorphism Design**

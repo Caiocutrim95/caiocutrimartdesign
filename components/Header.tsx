@@ -1,18 +1,14 @@
 
 import React, { useState, useEffect } from 'react';
-import { ViewState } from '../types';
+import { Link, useLocation } from 'react-router-dom';
 import { SOCIAL_LINKS } from '../constants';
 import Logo from './Logo';
 import { Menu, X } from 'lucide-react';
 
-interface HeaderProps {
-  setView: (v: ViewState) => void;
-  currentView: ViewState;
-}
-
-const Header: React.FC<HeaderProps> = ({ setView, currentView }) => {
+const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,30 +25,31 @@ const Header: React.FC<HeaderProps> = ({ setView, currentView }) => {
       <div className={`w-full flex items-center justify-between px-[5%] transition-all duration-500 border-b border-white/10 glass 
         ${isScrolled ? 'py-3 bg-slate-950/90 backdrop-blur-3xl shadow-[0_20px_50px_rgba(0,0,0,0.4)]' : 'py-6 bg-white/5 backdrop-blur-2xl'}`}
       >
-        <div 
-          onClick={() => { setView('home'); setMobileMenuOpen(false); }}
+        <Link 
+          to="/"
+          onClick={() => setMobileMenuOpen(false)}
           className="cursor-pointer transition-transform duration-300 hover:scale-105"
         >
           <Logo />
-        </div>
+        </Link>
 
         {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center gap-12 font-bold text-[11px] tracking-[0.2em] uppercase">
-          <button 
-            onClick={() => setView('home')}
-            className={`relative py-2 transition-all hover:text-orange-400 group ${currentView === 'home' ? 'text-orange-500' : 'text-slate-300'}`}
+          <Link 
+            to="/"
+            className={`relative py-2 transition-all hover:text-orange-400 group ${location.pathname === '/' ? 'text-orange-500' : 'text-slate-300'}`}
           >
             Início
-            <span className={`absolute bottom-0 left-0 h-[2px] bg-orange-500 transition-all duration-300 ease-out ${currentView === 'home' ? 'w-full' : 'w-0 group-hover:w-full'}`} />
-          </button>
+            <span className={`absolute bottom-0 left-0 h-[2px] bg-orange-500 transition-all duration-300 ease-out ${location.pathname === '/' ? 'w-full' : 'w-0 group-hover:w-full'}`} />
+          </Link>
           
-          <button 
-            onClick={() => setView('niches')}
-            className={`relative py-2 transition-all hover:text-orange-400 group ${currentView === 'niches' ? 'text-orange-500' : 'text-slate-300'}`}
+          <Link 
+            to="/nichos"
+            className={`relative py-2 transition-all hover:text-orange-400 group ${location.pathname === '/nichos' ? 'text-orange-500' : 'text-slate-300'}`}
           >
             Ver Nichos
-            <span className={`absolute bottom-0 left-0 h-[2px] bg-orange-500 transition-all duration-300 ease-out ${currentView === 'niches' ? 'w-full' : 'w-0 group-hover:w-full'}`} />
-          </button>
+            <span className={`absolute bottom-0 left-0 h-[2px] bg-orange-500 transition-all duration-300 ease-out ${location.pathname === '/nichos' ? 'w-full' : 'w-0 group-hover:w-full'}`} />
+          </Link>
 
           <a 
             href={SOCIAL_LINKS.googleMaps} 
@@ -94,8 +91,8 @@ const Header: React.FC<HeaderProps> = ({ setView, currentView }) => {
 
       {/* Mobile Menu */}
       <div className={`lg:hidden fixed inset-0 z-[-1] bg-slate-950/98 backdrop-blur-2xl flex flex-col items-center justify-center gap-8 transition-all duration-500 ${mobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full pointer-events-none'}`}>
-          <button onClick={() => { setView('home'); setMobileMenuOpen(false); }} className="text-2xl font-black tracking-widest text-white uppercase">Início</button>
-          <button onClick={() => { setView('niches'); setMobileMenuOpen(false); }} className="text-2xl font-black tracking-widest text-white uppercase">Ver Nichos</button>
+          <Link to="/" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-black tracking-widest text-white uppercase">Início</Link>
+          <Link to="/nichos" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-black tracking-widest text-white uppercase">Ver Nichos</Link>
           <a href={SOCIAL_LINKS.googleMaps} target="_blank" className="text-2xl font-black tracking-widest text-white uppercase">Localização</a>
           <a href={SOCIAL_LINKS.instagram} target="_blank" className="text-2xl font-black tracking-widest text-white uppercase">Instagram</a>
           <a href={SOCIAL_LINKS.whatsapp} target="_blank" className="mt-8 bg-orange-500 px-10 py-5 rounded-2xl font-black text-white">FALAR AGORA</a>

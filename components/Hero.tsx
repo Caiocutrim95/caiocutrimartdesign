@@ -1,34 +1,42 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Button from './Button';
 import { SOCIAL_LINKS } from '../constants';
 
 const SLIDE_DATA = [
   {
     // Nicho: Restaurantes e Delivery
-    url: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop",
-    thumb: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=600&auto=format&fit=crop",
+    url: "/assets/nicho-restaurante.jpg",
+    fallback: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&q=80&w=1200",
+    thumb: "/assets/thumb-restaurante.jpg",
+    thumbFallback: "https://images.unsplash.com/photo-1526367790999-015070ae42f5?auto=format&fit=crop&q=80&w=600",
     label: "Apps de Comida & Delivery",
     desc: "Sistemas de Pedidos Online"
   },
   {
     // Nicho: Advogados
-    url: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1200&auto=format&fit=crop",
-    thumb: "https://images.unsplash.com/photo-1505664194779-8beaceb93744?q=80&w=600&auto=format&fit=crop",
+    url: "/assets/nicho-advocacia.jpg",
+    fallback: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=1200",
+    thumb: "/assets/thumb-advocacia.jpg",
+    thumbFallback: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=600",
     label: "Sites para Advogados",
     desc: "Autoridade e Captação Jurídica"
   },
   {
     // Nicho: Imobiliárias
-    url: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1200&auto=format&fit=crop",
-    thumb: "https://images.unsplash.com/photo-1448630360428-65456885c650?q=80&w=600&auto=format&fit=crop",
+    url: "/assets/nicho-imobiliaria.jpg",
+    fallback: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=1200",
+    thumb: "/assets/thumb-imobiliaria.jpg",
+    thumbFallback: "https://images.unsplash.com/photo-1448630360428-65456885c650?auto=format&fit=crop&q=80&w=600",
     label: "Imobiliárias de Luxo",
     desc: "Portfólios de Imóveis 4K"
   },
   {
     // Nicho: Clínicas e Médicos
-    url: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1200&auto=format&fit=crop",
-    thumb: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=600&auto=format&fit=crop",
+    url: "/assets/nicho-saude.jpg",
+    fallback: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=1200",
+    thumb: "/assets/thumb-saude.jpg",
+    thumbFallback: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=600",
     label: "Clínicas & Médicos",
     desc: "Agendamento e Telemedicina"
   }
@@ -41,12 +49,14 @@ interface HeroProps {
 const Hero: React.FC<HeroProps> = ({ onSeeNiches }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % SLIDE_DATA.length);
-    }, 5000);
-    return () => clearInterval(timer);
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % SLIDE_DATA.length);
   }, []);
+
+  useEffect(() => {
+    const timer = setInterval(nextSlide, 5000);
+    return () => clearInterval(timer);
+  }, [nextSlide]);
 
   return (
     <section className="relative pt-44 pb-32 px-6 overflow-hidden">
@@ -82,40 +92,37 @@ const Hero: React.FC<HeroProps> = ({ onSeeNiches }) => {
           
           {/* IMAGEM PRINCIPAL (Sincronizada) */}
           <div className="relative z-0 p-3 glass rounded-[3.5rem] shadow-2xl overflow-hidden group-hover:shadow-blue-500/10 transition-all duration-700">
-            <div 
-              className="flex w-full aspect-video transition-transform duration-1000 ease-in-out rounded-[2.8rem] overflow-hidden bg-slate-900"
-            >
-              {SLIDE_DATA.map((slide, idx) => (
-                <div 
-                  key={idx} 
-                  className="w-full h-full flex-shrink-0 relative transition-opacity duration-700"
-                  style={{ 
-                    transform: `translateX(-${currentSlide * 100}%)`,
-                  }}
-                >
-                  <img 
-                    src={slide.url} 
-                    alt={slide.label} 
-                    className="w-full h-full object-cover brightness-[0.8] scale-105"
-                    onError={(e) => {
-                       (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200';
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent" />
-                  
-                  <div className={`absolute bottom-10 left-10 transition-all duration-1000 ${currentSlide === idx ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
-                    <span className="block text-[10px] text-blue-400 font-black tracking-[0.3em] uppercase mb-2">Demonstração Ativa</span>
-                    <h3 className="text-3xl font-black text-white uppercase italic">{slide.label}</h3>
+            <div className="relative aspect-video rounded-[2.8rem] overflow-hidden bg-slate-900">
+              <div 
+                className="flex h-full w-full transition-transform duration-1000 ease-in-out"
+                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+              >
+                {SLIDE_DATA.map((slide, idx) => (
+                  <div key={idx} className="w-full h-full flex-shrink-0 relative">
+                    <img 
+                      src={slide.url} 
+                      alt={slide.label} 
+                      className="w-full h-full object-cover brightness-[0.7] scale-105"
+                      loading="lazy"
+                      onError={(e) => {
+                         (e.target as HTMLImageElement).src = slide.fallback;
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent" />
+                    <div className={`absolute bottom-10 left-10 transition-all duration-1000 delay-300 ${currentSlide === idx ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
+                      <span className="block text-[10px] text-blue-400 font-black tracking-[0.3em] uppercase mb-2">Protótipo Ativo</span>
+                      <h3 className="text-3xl font-black text-white uppercase italic">{slide.label}</h3>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
 
           {/* CARD DO SLIDER FLUTUANTE */}
           <div className="absolute -top-12 -left-8 md:-left-12 z-20 glass p-5 rounded-[2.5rem] shadow-[0_25px_60px_rgba(0,0,0,0.5)] border border-blue-500/20 w-72 md:w-96 transform hover:scale-105 transition-all duration-500 group-hover:rotate-1">
             
-            <div className="relative h-48 md:h-60 w-full mb-6 overflow-hidden rounded-[1.8rem] bg-slate-950 ring-2 ring-blue-500/30 shadow-[inset_0_0_20px_rgba(0,0,0,0.8)]">
+            <div className="relative h-48 md:h-60 w-full mb-6 overflow-hidden rounded-[1.8rem] bg-slate-950 ring-2 ring-blue-500/30">
               <div 
                 className="flex h-full w-full transition-transform duration-1000 ease-in-out"
                 style={{ transform: `translateX(-${currentSlide * 100}%)` }}
@@ -127,12 +134,12 @@ const Hero: React.FC<HeroProps> = ({ onSeeNiches }) => {
                       alt={slide.label}
                       className="w-full h-full object-cover"
                       onError={(e) => {
-                         (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=600';
+                         (e.target as HTMLImageElement).src = slide.thumbFallback;
                       }}
                     />
                     <div className="absolute top-4 left-4">
                       <span className="bg-blue-600/90 text-[8px] font-black uppercase px-3 py-1 rounded-full tracking-widest text-white shadow-lg backdrop-blur-sm">
-                        CASE 0{index + 1}
+                        PREVIEW {index + 1}
                       </span>
                     </div>
                   </div>
